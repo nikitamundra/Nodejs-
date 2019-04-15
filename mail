@@ -1,0 +1,38 @@
+var express = require("express");
+
+var app = express();
+var bodyparser = require("body-parser");
+var nodemailer = require('nodemailer');
+
+var attachments =[{ filename: "download (1).jpeg" , path: "/home/chapter/Pictures/download (1).jpeg", contentType: "application/image"},{ filename: "lok resume.docx" , path: "/home/chapter/Desktop/lok resume.docx", contentType: "application/document"}]
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'nikitam.chapter247@gmail.com',
+    pass: '*****'
+  }
+});
+
+var mailOptions = {
+  from: 'nikitam.chapter247@gmail.com',
+  to: 'minal.chapter247@gmail.com',
+  subject: 'For checking purpose',
+  text: 'That was easy!',
+  attachments:attachments
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+var server = app.listen(8080, function() {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log("Example app listening at http://%s:%s", host, port);
+  });
